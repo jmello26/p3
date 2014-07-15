@@ -15,3 +15,13 @@ Route::get('/', function()
 {
 	return View::make('index');
 });
+
+Route::get('/lorem', function()
+{
+	return View::make('lorem');
+});
+
+Route::get('/users', function()
+{
+	return View::make('users');
+});
