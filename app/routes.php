@@ -72,6 +72,11 @@ Route::get('/users', function()
 Route::post('/users', function()
 {
 	$num_users = Input::get('num_users');
-	$result = $num_users;
+	$faker = Faker\Factory::create();
+	$users = array();
+	for ($i=0; $i < $num_users; $i++) {
+		$users[$i] = $faker->name;
+	}
+	$result = implode('<p>', $users);
 	return View::make('users')->with('result', $result);
 });
