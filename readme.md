@@ -13,5 +13,5 @@ No login required.
 
 ## Outside code
 This application uses the following packages:
-	For the lorem ipsum text, I am using the badcow/lorem-ipsum package.
-	For the random users, I am using the fzaninotto/faker package.
+	For the lorem ipsum text, I am using the badcow/lorem-ipsum package (https://packagist.org/packages/badcow/lorem-ipsum ).
+	For the random users, I am using the fzaninotto/faker package (https://packagist.org/packages/fzaninotto/faker ).
