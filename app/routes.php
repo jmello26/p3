@@ -34,19 +34,38 @@ Route::get('/lorem', function()
 */
 Route::post('/lorem', function() 
 {
-	// get value from num_paras element
-	$num_paras = Input::get('num_paras');
+
+	// get POST data for validation
+	$post_data = Input::all();
 	
-	// instantiate lorem ipsum generator
-	$generator = new Badcow\LoremIpsum\Generator();
+	// require that num_paras is present, and numeric
+	$valid_rule = array(
+		'num_paras' => 'required|numeric'
+	);
 	
-	// request paragrpahs of text based on input
-	$paragraphs = $generator->getParagraphs($num_paras);
+	// create a new validator instance
+    $validator = Validator::make($post_data, $valid_rule);
+
+    if ($validator->passes()) {
+		// instantiate lorem ipsum generator
+		$generator = new Badcow\LoremIpsum\Generator();
 	
-	// turn the array into a String
-	$result = implode('<p>', $paragraphs);
-	
-	// pass the result string to this view again
+		// get value from num_paras element
+		$num_paras = Input::get('num_paras');
+		
+		// request paragrpahs of text based on input
+		$paragraphs = $generator->getParagraphs($num_paras);
+		
+		// turn the array into a String
+		$result = implode('<p>', $paragraphs);
+		
+		// pass the result string to this view again
+        
+    }
+	else {
+		// validation failed, display a message
+		$result = "Enter a valid number.";
+	}
 	return View::make('lorem')->with('result', $result);
 });
 
@@ -60,29 +79,46 @@ Route::get('/users', function()
 });
 
 
+
 /*
    Input posted to the 'users' page
 */
 Route::post('/users', function()
 {
+	// get POST data for validation
+	$post_data = Input::all();
+	
+	// require that num_paras is present, and numeric
+	$valid_rule = array(
+		'num_users' => 'required|numeric'
+	);
+	
+	// create a new validator instance
+    $validator = Validator::make($post_data, $valid_rule);
 
-	// get the value posted from the num_users element
-	$num_users = Input::get('num_users');
+    if ($validator->passes()) {
+		// get the value posted from the num_users element
+		$num_users = Input::get('num_users');
 	
-	// instantiate a Faker object
-	$faker = Faker\Factory::create();
+		// instantiate a Faker object
+		$faker = Faker\Factory::create();
 	
-	// array to hold the user information
-	$users = array();
+		// array to hold the user information
+		$users = array();
 	
-	// get the requested number of users and store them in the $users array
-	for ($i=0; $i < $num_users; $i++) {
-		$users[$i] = $faker->name;
+		// get the requested number of users and store them in the $users array
+		for ($i=0; $i < $num_users; $i++) {
+			$users[$i] = $faker->name;
+		}
+	
+		// convert the array into a String
+		$result = implode('<p>', $users);
+    }
+	else {
+		// validation failed, display a message
+		$result = "Enter a valid number.";
 	}
-	
-	// convert the array into a String
-	$result = implode('<p>', $users);
-	
+
 	// re-display this page, passing the string of users back to it
 	return View::make('users')->with('result', $result);
 });
