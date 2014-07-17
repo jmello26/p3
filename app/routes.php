@@ -21,7 +21,7 @@ Route::get('/', function()
 
 /*
    Handles form submittal
-*/
+
 Route::post('/', function()
 {
 	$selection = Input::get('dev_tool');
@@ -35,6 +35,8 @@ Route::post('/', function()
 		return View::make('index');
 	}
 });
+
+*/
 
 /*
    Handles direct url to lorem page
